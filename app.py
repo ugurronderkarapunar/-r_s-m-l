@@ -1,4 +1,4 @@
-# requirements.txt:
+# requirements.txt
 # streamlit
 # pandas
 # plotly
@@ -6,7 +6,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-import plotly.express as px
 
 # ─────────────────────────────────────────────
 # SAYFA YAPILANDIRMASI
@@ -370,10 +369,6 @@ THEORIES = {
 
 # ─────────────────────────────────────────────
 # SİMÜLASYON KARAR AĞACI VERİSİ
-# Yapı: SIMULATION_DATA[aşama][teori_id] = {
-#   "secenekler": [(metin, tip, geri_bildirim), ...],  tip: "teorik"|"zit"|"pragmatik"
-#   "sonrac_teorik": str (bu aşamada teorik seçim yapıldığında ne olur)
-# }
 # ─────────────────────────────────────────────
 SIMULATION_DATA = {
     1: {
