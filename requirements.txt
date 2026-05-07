@@ -3,3 +3,6 @@ opencv-python-headless
 streamlit-webrtc
 numpy
 av
+tornado
+websockets
+pydantic
