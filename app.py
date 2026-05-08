@@ -15,33 +15,85 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ── Global CSS (sadece gerekli düzeltmeler) ──────
-st.markdown("""
-<style>
-    .stApp {
-        background-color: #F0F4F8;
+# ── Session State (tema eklenmiş) ────────────────
+def init_state():
+    defaults = {
+        "page": "🏠 Ana Sayfa",
+        "secilen_teori": None,
+        "sim_asama": 0,
+        "sim_puan": 0,
+        "sim_rol": None,
+        "sim_secimler": [],
+        "sim_bitti": False,
+        "tema": "🌞 Açık",   # yeni
     }
-    h1, h2, h3 {
-        color: #1A3C6E;
-    }
-    .stButton > button {
-        background: linear-gradient(135deg, #1A3C6E, #2C5282);
-        color: white;
-        border: none;
-        border-radius: 12px;
-        padding: 0.6rem 1.5rem;
-        font-weight: 600;
-        transition: 0.2s;
-    }
-    .stButton > button:hover {
-        background: linear-gradient(135deg, #FF6B35, #E5572A);
-        transform: translateY(-2px);
-    }
-    .stAlert p {
-        color: #1A202C !important;
-    }
-</style>
-""", unsafe_allow_html=True)
+    for k, v in defaults.items():
+        if k not in st.session_state:
+            st.session_state[k] = v
+
+init_state()
+
+# ── Tema CSS (açık / koyu) ───────────────────────
+if st.session_state["tema"] == "🌙 Koyu":
+    tema_css = """
+    <style>
+        :root {
+            --bg: #0F172A;
+            --card-bg: #1E293B;
+            --text: #E2E8F0;
+            --text-secondary: #CBD5E1;
+            --primary: #FF6B35;
+            --primary-dark: #1A3C6E;
+            --border: rgba(255,255,255,0.1);
+        }
+        .stApp { background-color: var(--bg); }
+        h1, h2, h3, h4, h5, h6, p, li, span, div { color: var(--text) !important; }
+        .stMetric label, .stMetric div { color: var(--text) !important; }
+        .stButton > button {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .stButton > button:hover {
+            background: linear-gradient(135deg, var(--primary), #E5572A);
+            transform: translateY(-2px);
+        }
+        .stAlert p { color: #1A202C !important; }
+        .stDataFrame { background-color: var(--card-bg); }
+    </style>
+    """
+else:
+    tema_css = """
+    <style>
+        :root {
+            --bg: #F0F4F8;
+            --card-bg: #FFFFFF;
+            --text: #1A202C;
+            --text-secondary: #4A5568;
+            --primary: #FF6B35;
+            --primary-dark: #1A3C6E;
+            --border: rgba(0,0,0,0.05);
+        }
+        .stApp { background-color: var(--bg); }
+        h1, h2, h3 { color: var(--primary-dark); }
+        .stButton > button {
+            background: linear-gradient(135deg, var(--primary-dark), #2C5282);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .stButton > button:hover {
+            background: linear-gradient(135deg, var(--primary), #E5572A);
+            transform: translateY(-2px);
+        }
+        .stAlert p { color: #1A202C !important; }
+    </style>
+    """
+
+st.markdown(tema_css, unsafe_allow_html=True)
 
 # ── Teori Verisi ──────────────────────────────────
 THEORIES = {
@@ -184,31 +236,21 @@ SONUCLAR = {
     0: "💥 Tam Kaos. Kriz çözümsüz kaldı."
 }
 
-# ── Session State ─────────────────────────────────
-def init_state():
-    D = {
-        "page": "🏠 Ana Sayfa",
-        "secilen_teori": None,
-        "sim_asama": 0,
-        "sim_puan": 0,
-        "sim_rol": None,
-        "sim_secimler": [],
-        "sim_bitti": False,
-    }
-    for k, v in D.items():
-        if k not in st.session_state:
-            st.session_state[k] = v
-
-init_state()
-
-# ── Sidebar ───────────────────────────────────────
+# ── Sidebar (Tema seçici eklendi) ────────────────
 with st.sidebar:
     st.markdown("## 🌍 Uİ Teori Simülatörü")
+    # Tema seçici
+    tema_secenek = st.radio("Tema", ["🌞 Açık", "🌙 Koyu"], index=0 if st.session_state["tema"] == "🌞 Açık" else 1)
+    if tema_secenek != st.session_state["tema"]:
+        st.session_state["tema"] = tema_secenek
+        st.rerun()
+
     menu = ["🏠 Ana Sayfa", "📚 Teori Seçimi", "🎮 Simülasyon", "📊 Karşılaştırma", "ℹ️ Hakkında"]
     secim = st.radio("Menü", menu, index=menu.index(st.session_state["page"]))
     if secim != st.session_state["page"]:
         st.session_state["page"] = secim
         st.rerun()
+
     if st.session_state["secilen_teori"]:
         t = THEORIES[st.session_state["secilen_teori"]]
         st.info(f"Seçili: {t['ikon']} {t['isim']}")
@@ -328,7 +370,6 @@ def show_result():
 # ── Karşılaştırma Tablosu ─────────────────────────
 def show_comparison():
     st.title("📊 Teoriler Karşılaştırma")
-    # Tablo
     df = pd.DataFrame({
         "Teori": [f"{t['ikon']} {t['isim']}" for t in THEORIES.values()],
         "Aktör": [t['aktor'] for t in THEORIES.values()],
@@ -337,7 +378,6 @@ def show_comparison():
     })
     st.dataframe(df, use_container_width=True, hide_index=True)
 
-    # Radar
     kategoriler = ["Askeri", "Ekonomi", "İşbirliği", "Birey"]
     fig_radar = go.Figure()
     for tid, t in THEORIES.items():
@@ -350,7 +390,6 @@ def show_comparison():
     fig_radar.update_layout(height=400)
     st.plotly_chart(fig_radar, use_container_width=True)
 
-    # Bar
     fig_bar = go.Figure(data=[
         go.Bar(name="Çatışma", x=list(THEORIES.keys()), y=[t["olasilik"][0] for t in THEORIES.values()]),
         go.Bar(name="İşbirliği", x=list(THEORIES.keys()), y=[t["olasilik"][1] for t in THEORIES.values()])
