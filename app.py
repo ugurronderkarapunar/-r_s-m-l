@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 # ─────────────────────────────────────────────
-# GLOBAL CSS
+# GLOBAL CSS (st.info metinlerini koyulaştırmak için ekleme yapıldı)
 # ─────────────────────────────────────────────
 st.markdown("""
 <style>
@@ -198,23 +198,6 @@ st.markdown("""
         margin-bottom: 10px;
     }
 
-    /* Aşama göstergesi */
-    .asama-bar {
-        display: flex;
-        gap: 8px;
-        margin-bottom: 24px;
-    }
-    .asama-daire {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 15px;
-    }
-
     /* Sonuç ekranı */
     .sonuc-hero {
         background: linear-gradient(135deg, #1A3C6E 0%, #2C5282 100%);
@@ -253,62 +236,27 @@ st.markdown("""
         border: none;
         border-radius: 8px;
         padding: 10px 24px;
-        font-family: 'Source Sans 3', sans-serif;
         font-size: 15px;
         font-weight: 600;
         transition: all 0.2s;
-        box-shadow: 0 2px 8px rgba(26, 60, 110, 0.2);
     }
     .stButton > button:hover {
         background: linear-gradient(135deg, #FF6B35 0%, #E5572A 100%);
         transform: translateY(-2px);
-        box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3);
-    }
-
-    /* Seçim kutuları */
-    .stRadio [data-baseweb="radio"] {
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 6px;
-        background: #F7FAFC;
-        border: 1px solid #E2E8F0;
-    }
-
-    /* Ayırıcı çizgi */
-    hr {
-        border: none;
-        border-top: 2px solid #E2E8F0;
-        margin: 24px 0;
-    }
-
-    /* Sidebar logo alanı */
-    .sidebar-logo {
-        padding: 16px;
-        text-align: center;
-        border-bottom: 1px solid rgba(255,255,255,0.15);
-        margin-bottom: 16px;
-    }
-    .sidebar-logo-metin {
-        color: #B3C6E0;
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
     }
 
     /* Alıntı kutusu */
     .alinti {
         background: #EBF4FF;
         border-left: 4px solid #1A3C6E;
-        border-radius: 0 8px 8px 0;
         padding: 16px 20px;
         font-style: italic;
-        font-size: 15px;
         color: #2C5282;
         margin: 16px 0;
     }
 
-    /* st.info içindeki metinleri okunur yap */
-    .stAlert {
+    /* st.info kutusundaki metinlerin okunabilir olması için */
+    .stAlert p, .stAlert div {
         color: #1A202C !important;
     }
 </style>
@@ -336,7 +284,7 @@ THEORIES = {
         "isim": "Liberalizm",
         "ikon": "🕊️",
         "temel_varsayim": "Devletler işbirliği yapabilir ve karşılıklı çıkar, uluslararası kurumlar ve demokratik normlar aracılığıyla barış inşa edilebilir.",
-        "ana_aktorler": "Devletler, uluslararası örgütler (BM, Dünya Bankası), çok uluslu şirketler ve sivil toplum kuruluşları.",
+        "ana_aktorler": "Devletler, uluslararası örgütler, çok uluslu şirketler ve sivil toplum kuruluşları.",
         "dunya_gorusu": "Anarşi yumuşatılabilir. Kurumlar, ticaret bağımlılığı ve demokrasinin yayılması kalıcı barış zeminini hazırlar.",
         "guc_tanimi": "Kurumsal etki, ekonomik entegrasyon ve meşruiyet. 'Soft power' kaynakları en az askeri kapasite kadar belirleyicidir.",
         "meshur_soz": "\"Ebedi Barış, devletlerin anayasal cumhuriyetler olduğu ve hukuka saygı gösterdiği bir düzenle mümkündür.\" — Immanuel Kant",
@@ -373,146 +321,130 @@ THEORIES = {
 }
 
 # ─────────────────────────────────────────────
-# SİMÜLASYON KARAR AĞACI VERİSİ
+# SİMÜLASYON VERİSİ
 # ─────────────────────────────────────────────
 SIMULATION_DATA = {
     1: {
         "baslik": "⚡ Aşama 1: İlk Tepki",
-        "durum": "Arkania'nın barajı faaliyete geçti. Beledya'da çiftçiler isyan noktasında. Uluslararası kamuoyunun gözleri bu krize çevrildi. İlk adımını seçiyorsunuz.",
+        "durum": "Arkania'nın barajı faaliyete geçti. Beledya'da çiftçiler isyan noktasında.",
         "secenekler": {
             "realizm": [
                 ("Orduyu nehir sınırına konuşlandır; Arkania'ya güç sinyali ver.", "teorik",
-                 "🗡️ **Realist hamle:** Güç projeksiyonu karşı tarafı masaya oturtuyor. Arkania savunma pozisyonu alıyor; gerginlik tırmanıyor ama diyalog kapısı kapanmadı."),
+                 "🗡️ Realist hamle: Güç projeksiyonu karşı tarafı masaya oturtuyor."),
                 ("BM Su Hukuku Komisyonu'na başvur, uluslararası tahkim iste.", "zit",
-                 "🕊️ **Teoriye aykırı:** Uluslararası kurumlara güven realist anlayışla çelişiyor. Süreç uzuyor, Arkania zaman kazanıyor."),
+                 "🕊️ Teoriye aykırı: Uluslararası kurumlara güven realist anlayışla çelişiyor."),
                 ("Diplomatik kanal aç; su paylaşım müzakerelerine çağır.", "pragmatik",
-                 "🤝 **Pragmatik yaklaşım:** Görüşmeler başladı ancak Arkania somut adım atmakta isteksiz. Zaman kazanılıyor ama sonuç belirsiz."),
+                 "🤝 Pragmatik yaklaşım: Görüşmeler başladı ancak sonuç belirsiz.")
             ],
             "liberalizm": [
                 ("BM Su Hukuku Komisyonu'na başvur, uluslararası tahkim iste.", "teorik",
-                 "🕊️ **Liberal hamle:** Uluslararası toplumun dikkati çekildi. Arabulucu devletler devreye girdi; müzakere süreci resmen başladı."),
+                 "🕊️ Liberal hamle: Uluslararası toplum dikkati çekildi."),
                 ("Orduyu nehir sınırına konuşlandır; Arkania'ya güç sinyali ver.", "zit",
-                 "🗡️ **Teoriye aykırı:** Askeri yığınak liberal değerlerle çelişiyor. Uluslararası kamuoyu Beledya'yı eleştiriyor."),
+                 "🗡️ Teoriye aykırı: Askeri yığınak liberal değerlerle çelişiyor."),
                 ("Diplomatik kanal aç; su paylaşım müzakerelerine çağır.", "pragmatik",
-                 "🤝 **Pragmatik yaklaşım:** Görüşmeler başladı, ancak kurumsal destek olmadan süreç yavaş ilerliyor."),
+                 "🤝 Pragmatik yaklaşım: Görüşmeler başladı, kurumsal destek olmadan yavaş.")
             ],
             "konstrüktivizm": [
-                ("İki ülkenin ortak tarihsel su kullanım geleneklerini kamuoyuna duyur; 'nehir komşuluğu' kimliğini vurgula.", "teorik",
-                 "🧩 **Konstrüktivist hamle:** Medyada 'komşu halklar' anlatısı yankı uyandırdı. Arkania'da muhalefet seslendi; kimlik çerçevesi yumuşamaya başladı."),
-                ("Orduyu nehir sınırına konuşlandır; Arkania'ya güç sinyali ver.", "zit",
-                 "🗡️ **Teoriye aykırı:** Güç gösterisi 'düşman kimliği' söylemini pekiştiriyor; toplumsal ayrışma derinleşiyor."),
-                ("Diplomatik kanal aç; su paylaşım müzakerelerine çağır.", "pragmatik",
-                 "🤝 **Pragmatik yaklaşım:** Diplomatik temas kuruldu ama kimlik dönüşümü sağlanamadı; çözüm yüzeysel kalabilir."),
+                ("İki ülkenin ortak tarihsel su geleneklerini kamuoyuna duyur.", "teorik",
+                 "🧩 Konstrüktivist hamle: Medyada 'komşu halklar' anlatısı yankı uyandırdı."),
+                ("Orduyu nehir sınırına konuşlandır.", "zit",
+                 "🗡️ Teoriye aykırı: Güç gösterisi 'düşman kimliği' söylemini pekiştiriyor."),
+                ("Diplomatik kanal aç.", "pragmatik",
+                 "🤝 Pragmatik yaklaşım: Diplomatik temas kuruldu ama kimlik dönüşümü sağlanamadı.")
             ],
             "marksizm": [
-                ("Barajı inşa eden Kuzey Avrupa şirketinin ekonomik çıkarlarını ve hükümet bağlantılarını kamuoyuyla paylaş.", "teorik",
-                 "⚖️ **Marksist hamle:** Uluslararası kamuoyunda şirket karşıtı ses yükseldi. Yatırımcılar temkinli; Arkania hükümeti iç baskıyla karşılaşıyor."),
-                ("BM Su Hukuku Komisyonu'na başvur; uluslararası tahkim iste.", "zit",
-                 "🕊️ **Teoriye aykırı:** BM kurumları kapitalist düzenin bir parçası; bu yol gerçek sorunu değil belirtisini çözüyor."),
-                ("Diplomatik kanal aç; su paylaşım müzakerelerine çağır.", "pragmatik",
-                 "🤝 **Pragmatik yaklaşım:** Görüşme masası kuruldu; ancak ekonomik yapı değişmeden çözüm geçici olacak."),
-            ],
+                ("Barajı inşa eden şirketin ekonomik çıkarlarını kamuoyuyla paylaş.", "teorik",
+                 "⚖️ Marksist hamle: Şirket karşıtı ses yükseldi."),
+                ("BM Su Hukuku Komisyonu'na başvur.", "zit",
+                 "🕊️ Teoriye aykırı: BM kurumları kapitalist düzenin bir parçası."),
+                ("Diplomatik kanal aç.", "pragmatik",
+                 "🤝 Pragmatik: Görüşme masası kuruldu; ekonomik yapı değişmeden çözüm geçici.")
+            ]
         }
     },
     2: {
         "baslik": "🔥 Aşama 2: Kriz Tırmanıyor",
-        "durum": "Arkania su akışını daha da kıstı. Beledya'nın tahıl üretimi çöktü. Komşu ülkeler taraf seçmeye başladı. Kritik bir karar noktasındasın.",
+        "durum": "Arkania su akışını kıstı. Beledya'nın tahıl üretimi çöktü. Komşu ülkeler taraf seçiyor.",
         "secenekler": {
             "realizm": [
-                ("Bölgesel güç dengesini değiştirmek için Arkania'nın rakip komşusuyla askeri ittifak kur.", "teorik",
-                 "🗡️ **Realist hamle:** İttifak kuruldu! Arkania yalnızlaştı. Güç dengesi değişince Arkania müzakereye daha açık hale geldi."),
-                ("Uluslararası yardım çağrısında bulun; insani kriz ilan et.", "zit",
-                 "🆘 **Teoriye aykırı:** Güçten değil zafiyetten yapılan çağrı realist perspektifle çelişiyor. Arkania taviz verme gereği duymuyor."),
-                ("Ekonomik yaptırım tehdidini uluslararası destekle masaya koy.", "pragmatik",
-                 "💼 **Pragmatik yaklaşım:** Yaptırım tehdidi Arkania'yı düşündürdü; ancak destek yetersiz kalınca etki sınırlı."),
+                ("Bölgesel güç dengesini değiştirmek için askeri ittifak kur.", "teorik",
+                 "🗡️ Realist hamle: İttifak kuruldu! Arkania yalnızlaştı."),
+                ("Uluslararası yardım çağrısı yap.", "zit",
+                 "🆘 Teoriye aykırı: Zafiyetten yapılan çağrı Arkania'yı etkilemedi."),
+                ("Ekonomik yaptırım tehdidini masaya koy.", "pragmatik",
+                 "💼 Pragmatik: Arkania'yı düşündürdü, etki sınırlı.")
             ],
             "liberalizm": [
-                ("Bölgesel su anlaşmazlıklarını çözen başarılı uluslararası model anlaşmaları öneri olarak sun.", "teorik",
-                 "🕊️ **Liberal hamle:** Nil Havzası Girişimi ve Helsinki Kuralları örnek gösterildi. Ortak çerçeve müzakereye ivme kazandırdı."),
-                ("Bölgesel güç dengesini değiştirmek için askeri ittifak kur.", "zit",
-                 "🗡️ **Teoriye aykırı:** Askeri bloklaşma liberal işbirliği zeminini tahrip ediyor; üçüncü ülkeler çekiniyor."),
-                ("Ekonomik yaptırım tehdidini uluslararası destekle masaya koy.", "pragmatik",
-                 "💼 **Pragmatik yaklaşım:** Kademeli baskı işe yarıyor; Arkania bazı teknik uzlaşılara açık sinyaller veriyor."),
+                ("Başarılı uluslararası model anlaşmaları öner.", "teorik",
+                 "🕊️ Liberal hamle: Nil Havzası örneği müzakereye ivme kazandırdı."),
+                ("Askeri ittifak kur.", "zit",
+                 "🗡️ Teoriye aykırı: Askeri bloklaşma işbirliği zeminini tahrip etti."),
+                ("Ekonomik yaptırım tehdidi.", "pragmatik",
+                 "💼 Pragmatik: Arkania bazı teknik uzlaşılara açık sinyal verdi.")
             ],
             "konstrüktivizm": [
-                ("İki ülke halklarını buluşturan ortak kültürel su festivali öner; 'Bereket Nehri Ortak Mirasımız' kampanyası başlat.", "teorik",
-                 "🧩 **Konstrüktivist hamle:** Festival fikri viral oldu. Her iki ülkede sivil toplum harekete geçti; 'düşman ülke' söylemi zayıfladı."),
-                ("Bölgesel güç dengesini değiştirmek için askeri ittifak kur.", "zit",
-                 "🗡️ **Teoriye aykırı:** Askeri bloklaşma toplumlar arası 'biz' ve 'onlar' kimliğini pekiştiriyor; dönüşüm güçleşiyor."),
-                ("Ekonomik yaptırım tehdidini uluslararası destekle masaya koy.", "pragmatik",
-                 "💼 **Pragmatik yaklaşım:** Ekonomik baskı Arkania'yı yavaşlattı ama kimlik düzeyinde bir değişim yaratmadı."),
+                ("Ortak su festivali öner.", "teorik",
+                 "🧩 Konstrüktivist hamle: Festival fikri viral oldu, sivil toplum harekete geçti."),
+                ("Askeri ittifak kur.", "zit",
+                 "🗡️ Teoriye aykırı: Askeri bloklaşma toplumları ayrıştırdı."),
+                ("Ekonomik yaptırım tehdidi.", "pragmatik",
+                 "💼 Pragmatik: Ekonomik baskı Arkania'yı yavaşlattı.")
             ],
             "marksizm": [
-                ("İki ülke işçi sınıfı ve çiftçi örgütlerini sınır ötesi dayanışmaya çağır; elitleri değil halkları muhatap al.", "teorik",
-                 "⚖️ **Marksist hamle:** Sınır ötesi dayanışma güçlendi. Her iki hükümet de halktan baskı görüyor; şirketlerin rolü sorgulanmaya başlandı."),
-                ("Bölgesel güç dengesini değiştirmek için askeri ittifak kur.", "zit",
-                 "🗡️ **Teoriye aykırı:** Devlet-devlet ittifakı sermayenin gücünü sorgulamıyor; sadece egemen çıkarlar öne çıkıyor."),
-                ("Ekonomik yaptırım tehdidini uluslararası destekle masaya koy.", "pragmatik",
-                 "💼 **Pragmatik yaklaşım:** Yaptırım tehdidi şirketin çıkarlarını etkiliyor; ancak sınıfsal yapı bozulmadı."),
-            ],
+                ("İşçi ve çiftçi örgütlerini sınır ötesi dayanışmaya çağır.", "teorik",
+                 "⚖️ Marksist hamle: Sınır ötesi dayanışma güçlendi."),
+                ("Askeri ittifak kur.", "zit",
+                 "🗡️ Teoriye aykırı: Devlet-devlet ittifakı sermayenin gücünü sorgulamıyor."),
+                ("Ekonomik yaptırım tehdidi.", "pragmatik",
+                 "💼 Pragmatik: Şirketin çıkarlarını etkiledi, sınıfsal yapı bozulmadı.")
+            ]
         }
     },
     3: {
         "baslik": "🌊 Aşama 3: Son Hamle",
-        "durum": "Taraflar yoruldu. Uluslararası kamuoyu bir çözüm bekliyor. Bu son hamle, krizin seyrini ve tarihsel mirasını belirleyecek.",
+        "durum": "Taraflar yoruldu. Uluslararası kamuoyu bir çözüm bekliyor.",
         "secenekler": {
             "realizm": [
-                ("Müzakere masasında su akışı garantisi karşılığında Arkania'ya sınır güvencesi ver; ikili anlaşmayı imzala.", "teorik",
-                 "🗡️ **Realist hamle:** Güç temelli pazarlık sonuç verdi. Arkania %25 su akışını serbest bıraktı. Kalıcı değil ama mevcut güç dengesi korundu."),
-                ("Konuyu BM Güvenlik Konseyi'ne taşı; uluslararası yaptırım karar tasarısı hazırla.", "zit",
-                 "🇺🇳 **Teoriye aykırı:** Büyük güçlerin veto refleksi devreye girdi. Karar tasarısı beklendiği etkiyi yaratmadı."),
-                ("Su paylaşımını teknik komisyona havale et; 6 ay süre ver.", "pragmatik",
-                 "📋 **Pragmatik yaklaşım:** Komisyon çalışmaları başladı; süreç uzuyor ancak şiddet riski azaldı."),
+                ("Su akışı garantisi karşılığında ikili anlaşma imzala.", "teorik",
+                 "🗡️ Realist çözüm: Arkania %25 su akışını serbest bıraktı."),
+                ("Konuyu BM Güvenlik Konseyi'ne taşı.", "zit",
+                 "🇺🇳 Teoriye aykırı: Büyük güçlerin vetosuyla karşılaştı."),
+                ("Su paylaşımını teknik komisyona havale et.", "pragmatik",
+                 "📋 Pragmatik: Komisyon çalışmaları başladı, süreç uzuyor.")
             ],
             "liberalizm": [
-                ("BM ve bölgesel örgütlerin garantörlüğünde kapsamlı su paylaşım antlaşması imzala.", "teorik",
-                 "🕊️ **Liberal hamle:** Tarihi anlaşma! Kurumsal çerçeve sağlam; her iki taraf da denetim mekanizmalarını kabul etti. Bölgede emsal oluştu."),
-                ("Müzakere masasında güç temelli pazarlık yap; karşılıklı taviz al.", "zit",
-                 "🗡️ **Teoriye aykırı:** İkili pazarlık kurumsal güvencelerden yoksun; ilk kriz anında bozulabilir."),
-                ("Su paylaşımını teknik komisyona havale et; 6 ay süre ver.", "pragmatik",
-                 "📋 **Pragmatik yaklaşım:** Teknik çözüm sağlandı; ancak kurumsal meşruiyet eksik kaldı."),
+                ("BM garantörlüğünde kapsamlı antlaşma imzala.", "teorik",
+                 "🕊️ Liberal zafer: Tarihi anlaşma sağlandı."),
+                ("Müzakere masasında güç temelli pazarlık yap.", "zit",
+                 "🗡️ Teoriye aykırı: Kurumsal güvenceden yoksun anlaşma."),
+                ("Teknik komisyona havale et.", "pragmatik",
+                 "📋 Pragmatik: Teknik çözüm sağlandı, meşruiyet eksik.")
             ],
             "konstrüktivizm": [
-                ("İki ülke arasında ortak kimlik vurgulamalı 'Bereket Nehri Barış Beyannamesi'ni kamuoyu önünde imzalat.", "teorik",
-                 "🧩 **Konstrüktivist hamle:** Sembolik ama güçlü! Beyanname her iki ülkede kamuoyu nezdinde yeni bir 'komşu kimliği' pekiştirdi. Gelecekteki anlaşmazlıklar için zemin değişti."),
-                ("Müzakere masasında güç temelli pazarlık yap.", "zit",
-                 "🗡️ **Teoriye aykırı:** Güç temelli çözüm kimlik dönüşümünü geri alıyor; toplumlar arasındaki yumuşama tersine dönebilir."),
-                ("Su paylaşımını teknik komisyona havale et.", "pragmatik",
-                 "📋 **Pragmatik yaklaşım:** Teknik çözüm sağlandı; ancak kimliksel ayrışma hâlâ var."),
+                ("'Bereket Nehri Barış Beyannamesi'ni imzalat.", "teorik",
+                 "🧩 Konstrüktivist zirve: Yeni komşu kimliği pekişti."),
+                ("Güç temelli pazarlık yap.", "zit",
+                 "🗡️ Teoriye aykırı: Kimlik dönüşümü geri alındı."),
+                ("Teknik komisyona havale et.", "pragmatik",
+                 "📋 Pragmatik: Teknik çözüm, kimliksel ayrışma sürüyor.")
             ],
             "marksizm": [
-                ("Barajı işleten şirketi millileştir veya iki ülke devletinin ortak kamu idaresine devret; kârı su kullanıcı köylülere aktar.", "teorik",
-                 "⚖️ **Marksist hamle:** Devrimsel adım! Şirketin bölgeden çekilmesi sağlandı. Her iki ülkenin çiftçileri tarihte ilk kez ortak yönetim kurulunda yer aldı."),
-                ("BM ve bölgesel örgütlerin garantörlüğünde kapsamlı antlaşma imzala.", "zit",
-                 "🕊️ **Teoriye aykırı:** Uluslararası kurumlar kapitalist düzenin içinde; şirketin çıkarlarını koruyacak maddeleri antlaşmaya ekledi."),
-                ("Su paylaşımını teknik komisyona havale et.", "pragmatik",
-                 "📋 **Pragmatik yaklaşım:** Teknik çözüm sınıfsal ilişkileri değiştirmiyor; kısa vadeli rahatlama sağladı."),
-            ],
+                ("Barajı millileştir veya ortak kamu idaresine devret.", "teorik",
+                 "⚖️ Marksist devrim: Şirket bölgeden çekildi, çiftçiler yönetimde."),
+                ("BM garantörlüğünde antlaşma imzala.", "zit",
+                 "🕊️ Teoriye aykırı: Antlaşma şirketin çıkarlarını korudu."),
+                ("Teknik komisyona havale et.", "pragmatik",
+                 "📋 Pragmatik: Sınıfsal ilişkiler değişmedi.")
+            ]
         }
     }
 }
 
 SONUCLAR = {
-    3: {
-        "baslik": "🏆 Mükemmel Teorik Tutarlılık!",
-        "metin": "Seçtiğin teorik çerçeveyi baştan sona tutarlı biçimde uyguladın. Akademik çevrelerde bu tür analitik tutarlılık, bir teorinin açıklama gücünü test etmenin en sağlam yoludur.",
-        "durum": "✅ Müzakere ile kalıcı anlaşma sağlandı. Tarih seni tutarlı bir vizyon insanı olarak hatırlayacak."
-    },
-    2: {
-        "baslik": "⚖️ Dengeli Pragmatist",
-        "metin": "Teorik tutarlılıkla pratik zorunluluklar arasında denge kurdun. Gerçek dünya siyasetinde bu yaklaşım yaygındır; teorisyenler buna 'eklektisizm' der.",
-        "durum": "⚠️ Statüko korundu ama gerginlik sürüyor. Sonuçlar kısmen olumlu."
-    },
-    1: {
-        "baslik": "🌪️ Kriz Yönetimi Zayıf",
-        "metin": "Teoriden sapmalar senaryoyu öngörülemeyen yönlere taşıdı. Uİ teorileri, kriz anlarında bile karar vericilere referans noktası sunar.",
-        "durum": "🔴 Gerginlik sürdü; çözüm ertelendi. Sonuçlar belirsiz."
-    },
-    0: {
-        "baslik": "💥 Tam Kaos",
-        "metin": "Hiçbir teorik çerçeveye uymayan kararlar aldın. Belki de bunu bilinçli yaptın — bu da bir teorik duruş sayılır: 'saf reelpolitik'.",
-        "durum": "☠️ Kriz çözümsüz kaldı. Taraflar yorgun ve öfkeli."
-    }
+    3: {"baslik": "🏆 Mükemmel Teorik Tutarlılık!", "metin": "Teorik çerçeveyi tavizsiz uyguladın.", "durum": "✅ Kalıcı anlaşma sağlandı."},
+    2: {"baslik": "⚖️ Dengeli Pragmatist", "metin": "Teori ile pratiği dengeledin.", "durum": "⚠️ Statüko korundu, gerginlik sürüyor."},
+    1: {"baslik": "🌪️ Kriz Yönetimi Zayıf", "metin": "Teoriden sapmalar belirsizliğe yol açtı.", "durum": "🔴 Gerginlik sürdü, çözüm ertelendi."},
+    0: {"baslik": "💥 Tam Kaos", "metin": "Hiçbir teoriye uymayan kararlar.", "durum": "☠️ Kriz çözümsüz kaldı."}
 }
 
 # ─────────────────────────────────────────────
@@ -535,7 +467,7 @@ def init_state():
 init_state()
 
 # ─────────────────────────────────────────────
-# SIDEBAR NAVIGASYON
+# SIDEBAR
 # ─────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
@@ -545,21 +477,8 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    menu_secenekleri = [
-        "🏠 Ana Sayfa",
-        "📚 Teori Seçimi",
-        "🎮 Simülasyon (Nehir Krizi)",
-        "📊 Karşılaştırma Tablosu",
-        "ℹ️ Hakkında"
-    ]
-
-    secili_sayfa = st.radio(
-        "Menü",
-        menu_secenekleri,
-        index=menu_secenekleri.index(st.session_state["page"]),
-        key="sidebar_menu",
-        label_visibility="collapsed"
-    )
+    menu_secenekleri = ["🏠 Ana Sayfa", "📚 Teori Seçimi", "🎮 Simülasyon (Nehir Krizi)", "📊 Karşılaştırma Tablosu", "ℹ️ Hakkında"]
+    secili_sayfa = st.radio("Menü", menu_secenekleri, index=menu_secenekleri.index(st.session_state["page"]), label_visibility="collapsed")
     st.session_state["page"] = secili_sayfa
 
     if st.session_state["secilen_teori"]:
@@ -578,38 +497,18 @@ def show_home():
     st.markdown("""
     <div class="hero">
         <h1>Uluslararası İlişkiler Teori Simülatörü</h1>
-        <p>Soyut teorileri gerçek bir kriz senaryosunda test et. 
-        Realizm, Liberalizm, Konstrüktivizm ve Marksizm'i oyunlaştırılmış bir deneyimle keşfet.</p>
+        <p>Soyut teorileri gerçek bir kriz senaryosunda test et.</p>
     </div>
     """, unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("""
-        <div class="adim-kutu">
-            <div class="adim-ikon">📚</div>
-            <div class="adim-baslik">1. Teorini Seç</div>
-            <div class="adim-aciklama">Realizm, Liberalizm, Konstrüktivizm veya Marksizm'den birini seç.</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="adim-kutu"><div class="adim-ikon">📚</div><div class="adim-baslik">1. Teorini Seç</div></div>', unsafe_allow_html=True)
     with col2:
-        st.markdown("""
-        <div class="adim-kutu">
-            <div class="adim-ikon">🎮</div>
-            <div class="adim-baslik">2. Simülasyonu Çalıştır</div>
-            <div class="adim-aciklama">Nehir Krizi senaryosunda bir devlet adamı olarak 3 kritik kararı ver.</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="adim-kutu"><div class="adim-ikon">🎮</div><div class="adim-baslik">2. Simülasyonu Çalıştır</div></div>', unsafe_allow_html=True)
     with col3:
-        st.markdown("""
-        <div class="adim-kutu">
-            <div class="adim-ikon">📊</div>
-            <div class="adim-baslik">3. Sonuçları Karşılaştır</div>
-            <div class="adim-aciklama">Teorilerin radar grafikleri ve çatışma/işbirliği olasılıklarını görselleştir.</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="adim-kutu"><div class="adim-ikon">📊</div><div class="adim-baslik">3. Sonuçları Karşılaştır</div></div>', unsafe_allow_html=True)
 
-    st.markdown("<br>", unsafe_allow_html=True)
     if st.button("🚀 Hemen Başla"):
         st.session_state["page"] = "📚 Teori Seçimi"
         st.rerun()
@@ -619,82 +518,57 @@ def show_home():
 # ─────────────────────────────────────────────
 def show_theory_selection():
     st.markdown('<h1>📚 Teori Seçimi</h1>', unsafe_allow_html=True)
-    st.markdown('<p style="color:#4A5568; font-size:16px;">Simülasyona girmeden önce hangi teorik gözlükle analiz yapacağını seç.</p>', unsafe_allow_html=True)
-
     col_sol, col_sag = st.columns([1, 1.4])
     with col_sol:
         id_listesi = list(THEORIES.keys())
-        gosterim_listesi = [f"{THEORIES[tid]['ikon']}  {THEORIES[tid]['isim']}" for tid in id_listesi]
-        secim_index = 0
-        if st.session_state.get("secilen_teori") in id_listesi:
-            secim_index = id_listesi.index(st.session_state["secilen_teori"])
-
-        secim = st.selectbox("🔍 Teori seçin:", options=range(len(id_listesi)), format_func=lambda i: gosterim_listesi[i], index=secim_index)
+        gosterim = [f"{THEORIES[tid]['ikon']}  {THEORIES[tid]['isim']}" for tid in id_listesi]
+        secim = st.selectbox("🔍 Teori seçin:", range(len(id_listesi)), format_func=lambda i: gosterim[i])
         secilen_id = id_listesi[secim]
         teori = THEORIES[secilen_id]
-
-        if st.button("🎮 Bu Teoriyle Simülasyona Başla"):
+        if st.button("🎮 Simülasyona Başla"):
             st.session_state["secilen_teori"] = secilen_id
             for k in ["sim_asama", "sim_puan", "sim_rol", "sim_secimler", "sim_bitti"]:
-                if k in st.session_state:
-                    del st.session_state[k]
+                if k in st.session_state: del st.session_state[k]
             init_state()
             st.session_state["page"] = "🎮 Simülasyon (Nehir Krizi)"
             st.rerun()
-
     with col_sag:
         st.markdown(f"""
         <div class="teori-kart">
             <h2>{teori['ikon']} {teori['isim']}</h2>
-            <hr style="border-color:rgba(255,255,255,0.2); margin:12px 0;">
-            <div class="etiket">Temel Varsayım</div>
-            <div class="deger">{teori['temel_varsayim']}</div>
-            <div class="etiket">Ana Aktörler</div>
-            <div class="deger">{teori['ana_aktorler']}</div>
-            <div class="etiket">Güç Tanımı</div>
-            <div class="deger">{teori['guc_tanimi']}</div>
-            <div class="etiket">Dünya Görüşü</div>
-            <div class="deger">{teori['dunya_gorusu']}</div>
+            <hr style="border-color:rgba(255,255,255,0.2);">
+            <div class="etiket">Temel Varsayım</div><div class="deger">{teori['temel_varsayim']}</div>
+            <div class="etiket">Ana Aktörler</div><div class="deger">{teori['ana_aktorler']}</div>
+            <div class="etiket">Güç Tanımı</div><div class="deger">{teori['guc_tanimi']}</div>
+            <div class="etiket">Dünya Görüşü</div><div class="deger">{teori['dunya_gorusu']}</div>
         </div>
         """, unsafe_allow_html=True)
-
-        st.markdown(f"""
-        <div class="alinti">{teori['meshur_soz']}</div>
-        """, unsafe_allow_html=True)
+        st.markdown(f'<div class="alinti">{teori["meshur_soz"]}</div>', unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────
 # SİMÜLASYON
 # ─────────────────────────────────────────────
 def show_simulation():
     if not st.session_state.get("secilen_teori"):
-        st.warning("⚠️ Simülasyona başlamadan önce lütfen bir teori seçin.")
-        if st.button("📚 Teori Seçimine Git"):
+        st.warning("⚠️ Lütfen önce bir teori seçin.")
+        if st.button("Teori Seçimine Git"):
             st.session_state["page"] = "📚 Teori Seçimi"
             st.rerun()
         return
 
-    teori_id = st.session_state["secilen_teori"]
-    teori = THEORIES[teori_id]
-
-    st.markdown(f'<h1>🎮 Simülasyon — {teori["ikon"]} {teori["isim"]} Perspektifi</h1>', unsafe_allow_html=True)
+    teori = THEORIES[st.session_state["secilen_teori"]]
+    st.markdown(f'<h1>🎮 Simülasyon — {teori["ikon"]} {teori["isim"]}</h1>', unsafe_allow_html=True)
 
     st.markdown("""
     <div class="senaryo-kutu">
         <div class="senaryo-baslik">🌊 Nehir Krizi Senaryosu</div>
-        <p style="color:#5D4037; font-size:15px; line-height:1.7; margin:0;">
-        <strong>Bereket Nehri</strong>, iki komşu ülke arasında uyuşmazlık konusu. Yukarı kıyıdaş 
-        <strong>Arkania</strong>, yeni bir hidroelektrik barajı inşa etti. Aşağı kıyıdaş 
-        <strong>Beledya</strong>'nın su akışı <strong>%40 azaldı</strong>, tarım sektörü krizde. 
-        Gerginlik tırmanıyor. Sen bir karar verici olarak süreci yöneteceksin.
-        </p>
+        <p style="color:#5D4037;">Bereket Nehri krizi: Arkania baraj yaptı, Beledya susuz kaldı.</p>
     </div>
     """, unsafe_allow_html=True)
 
     if st.session_state["sim_asama"] == 0:
-        rol = st.radio("Hangi tarafı temsil edeceksin?",
-                       ["🏔️ Arkania (Yukarı Kıyıdaş — Barajı İşleten)", "🌾 Beledya (Aşağı Kıyıdaş — Su Krizi Yaşayan)"],
-                       key="rol_secim")
-        if st.button("✅ Rolü Onayla ve Oyuna Başla"):
+        rol = st.radio("Rol seç:", ["🏔️ Arkania", "🌾 Beledya"])
+        if st.button("Oyuna Başla"):
             st.session_state["sim_rol"] = rol
             st.session_state["sim_asama"] = 1
             st.rerun()
@@ -704,57 +578,26 @@ def show_simulation():
         show_simulation_result()
         return
 
-    asama_no = st.session_state["sim_asama"]
-    if asama_no > 3:
-        st.session_state["sim_bitti"] = True
-        st.rerun()
-
-    cols = st.columns(3)
-    for i in range(3):
-        with cols[i]:
-            if i+1 < asama_no:
-                bg, renk, ikon = "#C6F6D5", "#22543D", "✓"
-            elif i+1 == asama_no:
-                bg, renk, ikon = "#1A3C6E", "#FFFFFF", str(i+1)
-            else:
-                bg, renk, ikon = "#E2E8F0", "#A0AEC0", str(i+1)
-            st.markdown(f"""
-            <div style="background:{bg}; color:{renk}; width:36px; height:36px; border-radius:50%;
-                        display:flex; align-items:center; justify-content:center; font-weight:700;
-                        font-size:14px; margin:0 auto;">{ikon}</div>
-            <div style="text-align:center; font-size:11px; color:#718096; margin-top:4px;">Aşama {i+1}</div>
-            """, unsafe_allow_html=True)
-
-    asama_veri = SIMULATION_DATA[asama_no]
+    asama = st.session_state["sim_asama"]
+    asama_veri = SIMULATION_DATA[asama]
     st.markdown(f"### {asama_veri['baslik']}")
-    st.markdown(f"""
-    <div class="kart-turuncu">
-        <p style="margin:0; font-size:15px; color:#4A5568; line-height:1.7;">{asama_veri['durum']}</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(f'<div class="kart-turuncu"><p>{asama_veri["durum"]}</p></div>', unsafe_allow_html=True)
 
-    secenekler = asama_veri["secenekler"][teori_id]
-    secim_metinleri = [s[0] for s in secenekler]
-    secim = st.radio("Eylemini seç:", secim_metinleri, key=f"secim_{asama_no}")
+    secenekler = asama_veri["secenekler"][st.session_state["secilen_teori"]]
+    secim_metin = [s[0] for s in secenekler]
+    secim = st.radio("Eyleminiz:", secim_metin, key=f"sec_{asama}")
 
-    if st.button("➡️ Kararı Uygula"):
-        secilen = secenekler[secim_metinleri.index(secim)]
+    if st.button("Kararı Uygula"):
+        secilen = secenekler[secim_metin.index(secim)]
         if secilen[1] == "teorik":
             st.session_state["sim_puan"] += 1
-        st.session_state["sim_secimler"].append({
-            "asama": asama_no,
-            "secim": secim,
-            "tip": secilen[1],
-            "geri_bildirim": secilen[2]
-        })
+        st.session_state["sim_secimler"].append({"asama": asama, "secim": secim, "tip": secilen[1], "geri_bildirim": secilen[2]})
         st.session_state["sim_asama"] += 1
         if st.session_state["sim_asama"] > 3:
             st.session_state["sim_bitti"] = True
         st.rerun()
 
     if st.session_state["sim_secimler"]:
-        st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown("**📜 Önceki Kararların:**")
         for s in st.session_state["sim_secimler"]:
             st.info(s["geri_bildirim"])
 
@@ -767,172 +610,83 @@ def show_simulation_result():
     <div class="sonuc-hero">
         <div style="font-size:60px;">{teori['ikon']}</div>
         <h2>{sonuc['baslik']}</h2>
-        <p style="color:#B3C6E0; font-size:17px;">{sonuc['durum']}</p>
+        <p>{sonuc['durum']}</p>
     </div>
     """, unsafe_allow_html=True)
 
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.markdown(f"""
-        <div class="puan-kutu">
-            <div style="font-size:13px; color:#718096;">TEORİ UYUM PUANI</div>
-            <div class="puan-sayi">{puan}/3</div>
-            <div style="color:#4A5568;">{teori['isim']}</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f'<div class="puan-kutu"><div class="puan-sayi">{puan}/3</div></div>', unsafe_allow_html=True)
     with col2:
-        st.markdown(f"""
-        <div class="kart">
-            <div class="kart-baslik">📝 Teorik Değerlendirme</div>
-            <p class="kart-metin">{sonuc['metin']}</p>
-            <p class="kart-metin" style="margin-top:12px;"><strong>Teorik Beklenti:</strong> {teori['senaryo_davranis']}</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f'<div class="kart"><p>{sonuc["metin"]}</p><p><strong>Teorik Beklenti:</strong> {teori["senaryo_davranis"]}</p></div>', unsafe_allow_html=True)
 
-    st.markdown("### 📋 Kararlarının Özeti")
-    for s in st.session_state["sim_secimler"]:
-        tip_renk = {"teorik": "🟢", "zit": "🔴", "pragmatik": "🟡"}
-        tip_metin = {"teorik": "Teoriye Uygun", "zit": "Teoriye Aykırı", "pragmatik": "Pragmatik"}
-        st.markdown(f"""
-        <div class="kart-turuncu" style="border-left-color: {'#22543D' if s['tip']=='teorik' else '#742A2A' if s['tip']=='zit' else '#D69E2E'}">
-            <strong>Aşama {s['asama']}</strong> — {tip_renk[s['tip']]} {tip_metin[s['tip']]}<br>
-            <span style="color:#4A5568;">{s['secim']}</span>
-        </div>
-        """, unsafe_allow_html=True)
+    # 3D Grafik
+    teorik = sum(1 for s in st.session_state["sim_secimler"] if s["tip"] == "teorik")
+    pragmatik = sum(1 for s in st.session_state["sim_secimler"] if s["tip"] == "pragmatik")
+    aykiri = 3 - teorik - pragmatik
 
-    # ---- 3D Karşılaştırma Grafiği ----
-    st.markdown("---")
-    st.markdown("### 🧊 Kararlarının 3 Boyutlu Profili")
-    teorik_sayisi = sum(1 for s in st.session_state["sim_secimler"] if s["tip"] == "teorik")
-    pragmatik_sayisi = sum(1 for s in st.session_state["sim_secimler"] if s["tip"] == "pragmatik")
-    aykiri_sayisi = 3 - teorik_sayisi - pragmatik_sayisi
-
-    fig_3d = go.Figure()
-    fig_3d.add_trace(go.Scatter3d(
-        x=[teorik_sayisi],
-        y=[pragmatik_sayisi],
-        z=[aykiri_sayisi],
+    fig_3d = go.Figure(go.Scatter3d(
+        x=[teorik], y=[pragmatik], z=[aykiri],
         mode='markers+text',
         marker=dict(size=12, color='#FF6B35'),
         text=["Senin Kararların"],
         textposition='top center'
     ))
     fig_3d.update_layout(
-        scene=dict(
-            xaxis_title="Teorik",
-            yaxis_title="Pragmatik",
-            zaxis_title="Aykırı",
-            xaxis=dict(range=[0,3]),
-            yaxis=dict(range=[0,3]),
-            zaxis=dict(range=[0,3])
-        ),
-        height=400,
-        title="Kararlarının 3 Boyutlu Dağılımı"
+        scene=dict(xaxis_title="Teorik", yaxis_title="Pragmatik", zaxis_title="Aykırı",
+                   xaxis=dict(range=[0,3]), yaxis=dict(range=[0,3]), zaxis=dict(range=[0,3])),
+        height=400, title="Kararlarının 3 Boyutlu Profili"
     )
     st.plotly_chart(fig_3d, use_container_width=True)
 
-    col_r1, col_r2 = st.columns(2)
-    with col_r1:
-        if st.button("🔄 Simülasyonu Sıfırla"):
-            for k in ["sim_asama", "sim_puan", "sim_rol", "sim_secimler", "sim_bitti"]:
-                if k in st.session_state:
-                    del st.session_state[k]
-            init_state()
-            st.rerun()
-    with col_r2:
-        if st.button("📚 Farklı Teori Dene"):
-            st.session_state["secilen_teori"] = None
-            for k in ["sim_asama", "sim_puan", "sim_rol", "sim_secimler", "sim_bitti"]:
-                if k in st.session_state:
-                    del st.session_state[k]
-            init_state()
-            st.session_state["page"] = "📚 Teori Seçimi"
-            st.rerun()
+    if st.button("🔄 Sıfırla"):
+        for k in ["sim_asama", "sim_puan", "sim_rol", "sim_secimler", "sim_bitti"]:
+            if k in st.session_state: del st.session_state[k]
+        init_state()
+        st.rerun()
 
 # ─────────────────────────────────────────────
-# KARŞILAŞTIRMA TABLOSU
+# KARŞILAŞTIRMA
 # ─────────────────────────────────────────────
 def show_comparison():
-    st.markdown('<h1>📊 Teoriler Karşılaştırma Tablosu</h1>', unsafe_allow_html=True)
-    tablo_data = {
+    st.markdown('<h1>📊 Karşılaştırma Tablosu</h1>', unsafe_allow_html=True)
+    df = pd.DataFrame({
         "Teori": ["Realizm 🗡️", "Liberalizm 🕊️", "Konstrüktivizm 🧩", "Marksizm ⚖️"],
-        "Ana Aktör": ["Devlet", "Devlet + Kurumlar + STK", "Toplumlar + Bireyler", "Sınıflar + Şirketler"],
-        "Sistem Yapısı": ["Anarşi (değişmez)", "Anarşi (yumuşatılabilir)", "Sosyal inşa", "Kapitalist hiyerarşi"],
-        "Çatışma Sebebi": ["Güç açığı / Güvenlik ikilemi", "Kurumsal eksiklik", "Kimlik uyuşmazlığı", "Sınıf ve sömürü"],
-        "Barış Yolu": ["Güç dengesi", "Kurumlar + Ticaret", "Kimlik dönüşümü", "Sınıf mücadelesi"],
-        "Analiz Düzeyi": ["Devlet / Sistem", "Devlet / Uluslararası", "Birey / Toplum", "Ekonomik yapı"]
-    }
-    df = pd.DataFrame(tablo_data)
+        "Aktör": ["Devlet", "Devlet + Kurumlar", "Toplumlar", "Sınıflar"],
+        "Barış Yolu": ["Güç dengesi", "Kurumlar", "Kimlik dönüşümü", "Sınıf mücadelesi"]
+    })
     st.dataframe(df, use_container_width=True, hide_index=True)
 
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown("#### 🕸️ Radar Grafiği")
-        kategoriler = ["Askeri Odak", "Ekonomik Odak", "İşbirliği İmkanı", "Birey Etkisi"]
-        renkler = ["#1A3C6E", "#2ECC71", "#FF6B35", "#E74C3C"]
         fig_radar = go.Figure()
-        for tid, renk in zip(THEORIES.values(), renkler):
-            degerler = [tid["radar"][k] for k in kategoriler]
+        for tid in THEORIES:
+            t = THEORIES[tid]
             fig_radar.add_trace(go.Scatterpolar(
-                r=degerler + [degerler[0]],
-                theta=kategoriler + [kategoriler[0]],
-                fill='toself',
-                name=f"{tid['ikon']} {tid['isim']}",
-                line=dict(color=renk, width=2),
-                fillcolor=renk,
-                opacity=0.2
+                r=[t["radar"]["Askeri Odak"], t["radar"]["Ekonomik Odak"], t["radar"]["İşbirliği İmkanı"], t["radar"]["Birey Etkisi"]],
+                theta=["Askeri", "Ekonomi", "İşbirliği", "Birey"],
+                fill='toself', name=f'{t["ikon"]} {t["isim"]}'
             ))
-        fig_radar.update_layout(polar=dict(radialaxis=dict(range=[0,10])), height=420)
+        fig_radar.update_layout(height=400)
         st.plotly_chart(fig_radar, use_container_width=True)
 
     with col2:
-        st.markdown("#### 📊 Çatışma / İşbirliği Olasılığı")
-        teori_isimleri = [f"{t['ikon']} {t['isim']}" for t in THEORIES.values()]
-        catisma = [t["olasilik"]["Çatışma"] for t in THEORIES.values()]
-        isbirligi = [t["olasilik"]["İşbirliği"] for t in THEORIES.values()]
         fig_bar = go.Figure(data=[
-            go.Bar(name='Çatışma Olasılığı (%)', x=teori_isimleri, y=catisma, marker_color='#E74C3C'),
-            go.Bar(name='İşbirliği Olasılığı (%)', x=teori_isimleri, y=isbirligi, marker_color='#2ECC71')
+            go.Bar(name='Çatışma', x=list(THEORIES.keys()), y=[t["olasilik"]["Çatışma"] for t in THEORIES.values()]),
+            go.Bar(name='İşbirliği', x=list(THEORIES.keys()), y=[t["olasilik"]["İşbirliği"] for t in THEORIES.values()])
         ])
-        fig_bar.update_layout(barmode='group', height=420, yaxis=dict(range=[0,100]))
         st.plotly_chart(fig_bar, use_container_width=True)
-
-    secili_detay = st.selectbox("Detaylı teori incele:", list(THEORIES.keys()), format_func=lambda tid: f"{THEORIES[tid]['ikon']} {THEORIES[tid]['isim']}")
-    teori_d = THEORIES[secili_detay]
-    with st.expander(f"{teori_d['isim']} Detayları", expanded=True):
-        col_d1, col_d2 = st.columns(2)
-        with col_d1:
-            st.markdown(f"**Temel Varsayım:** {teori_d['temel_varsayim']}")
-            st.markdown(f"**Ana Aktörler:** {teori_d['ana_aktorler']}")
-        with col_d2:
-            st.markdown(f"**Güç Tanımı:** {teori_d['guc_tanimi']}")
-            st.markdown(f"**Kriz Davranışı:** {teori_d['senaryo_davranis']}")
 
 # ─────────────────────────────────────────────
 # HAKKINDA
 # ─────────────────────────────────────────────
 def show_about():
     st.markdown('<h1>ℹ️ Hakkında</h1>', unsafe_allow_html=True)
-    col1, col2 = st.columns([2, 1])
-    with col1:
-        st.markdown("""
-        <div class="kart">
-            <div class="kart-baslik">🎓 Uygulama Hakkında</div>
-            <p class="kart-metin">Bu simülatör, Uluslararası İlişkiler lisans öğrencilerine yönelik eğitim amaçlıdır. 
-            Realizm, Liberalizm, Konstrüktivizm ve Marksizm teorilerini bir kriz senaryosuyla deneyimlemenizi sağlar.</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col2:
-        st.markdown("""
-        <div class="kart-turuncu">
-            <div class="kart-baslik">🛠️ Teknik</div>
-            <p class="kart-metin">Python + Streamlit + Plotly</p>
-        </div>
-        """, unsafe_allow_html=True)
-    st.markdown("<div style='text-align:center; color:#A0AEC0;'>© 2024 Uİ Teori Simülatörü | Eğitim Amaçlıdır</div>", unsafe_allow_html=True)
+    st.markdown('<div class="kart"><p>Eğitim amaçlı Uluslararası İlişkiler simülatörü.</p></div>', unsafe_allow_html=True)
+    st.markdown('<div style="text-align:center; color:#A0AEC0;">© 2024 Uİ Teori Simülatörü</div>', unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────
-# SAYFA YÖNLENDİRME
+# YÖNLENDİRME
 # ─────────────────────────────────────────────
 page = st.session_state["page"]
 if page == "🏠 Ana Sayfa":
