@@ -306,6 +306,11 @@ st.markdown("""
         color: #2C5282;
         margin: 16px 0;
     }
+
+    /* st.info içindeki metinleri okunur yap */
+    .stAlert {
+        color: #1A202C !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -487,33 +492,24 @@ SIMULATION_DATA = {
     }
 }
 
-# Seçimlere göre sonuç belirleme
 SONUCLAR = {
     3: {
         "baslik": "🏆 Mükemmel Teorik Tutarlılık!",
-        "renk": "#22543D",
-        "arkaplan": "linear-gradient(135deg, #C6F6D5 0%, #9AE6B4 100%)",
         "metin": "Seçtiğin teorik çerçeveyi baştan sona tutarlı biçimde uyguladın. Akademik çevrelerde bu tür analitik tutarlılık, bir teorinin açıklama gücünü test etmenin en sağlam yoludur.",
         "durum": "✅ Müzakere ile kalıcı anlaşma sağlandı. Tarih seni tutarlı bir vizyon insanı olarak hatırlayacak."
     },
     2: {
         "baslik": "⚖️ Dengeli Pragmatist",
-        "renk": "#744210",
-        "arkaplan": "linear-gradient(135deg, #FEFCBF 0%, #FAF089 100%)",
         "metin": "Teorik tutarlılıkla pratik zorunluluklar arasında denge kurdun. Gerçek dünya siyasetinde bu yaklaşım yaygındır; teorisyenler buna 'eklektisizm' der.",
         "durum": "⚠️ Statüko korundu ama gerginlik sürüyor. Sonuçlar kısmen olumlu."
     },
     1: {
         "baslik": "🌪️ Kriz Yönetimi Zayıf",
-        "renk": "#742A2A",
-        "arkaplan": "linear-gradient(135deg, #FED7D7 0%, #FC8181 100%)",
         "metin": "Teoriden sapmalar senaryoyu öngörülemeyen yönlere taşıdı. Uİ teorileri, kriz anlarında bile karar vericilere referans noktası sunar.",
         "durum": "🔴 Gerginlik sürdü; çözüm ertelendi. Sonuçlar belirsiz."
     },
     0: {
         "baslik": "💥 Tam Kaos",
-        "renk": "#1A202C",
-        "arkaplan": "linear-gradient(135deg, #E2E8F0 0%, #CBD5E0 100%)",
         "metin": "Hiçbir teorik çerçeveye uymayan kararlar aldın. Belki de bunu bilinçli yaptın — bu da bir teorik duruş sayılır: 'saf reelpolitik'.",
         "durum": "☠️ Kriz çözümsüz kaldı. Taraflar yorgun ve öfkeli."
     }
@@ -566,7 +562,6 @@ with st.sidebar:
     )
     st.session_state["page"] = secili_sayfa
 
-    # Seçili teori bilgisi sidebar'da göster
     if st.session_state["secilen_teori"]:
         t = THEORIES[st.session_state["secilen_teori"]]
         st.markdown(f"""
@@ -594,7 +589,7 @@ def show_home():
         <div class="adim-kutu">
             <div class="adim-ikon">📚</div>
             <div class="adim-baslik">1. Teorini Seç</div>
-            <div class="adim-aciklama">Realizm, Liberalizm, Konstrüktivizm veya Marksizm'den birini seç. Her teorinin varsayımlarını, aktörlerini ve güç tanımını öğren.</div>
+            <div class="adim-aciklama">Realizm, Liberalizm, Konstrüktivizm veya Marksizm'den birini seç.</div>
         </div>
         """, unsafe_allow_html=True)
     with col2:
@@ -602,7 +597,7 @@ def show_home():
         <div class="adim-kutu">
             <div class="adim-ikon">🎮</div>
             <div class="adim-baslik">2. Simülasyonu Çalıştır</div>
-            <div class="adim-aciklama">Nehir Krizi senaryosunda bir devlet adamı olarak 3 kritik kararı ver. Teorine ne kadar sadık kalabileceksin?</div>
+            <div class="adim-aciklama">Nehir Krizi senaryosunda bir devlet adamı olarak 3 kritik kararı ver.</div>
         </div>
         """, unsafe_allow_html=True)
     with col3:
@@ -610,27 +605,14 @@ def show_home():
         <div class="adim-kutu">
             <div class="adim-ikon">📊</div>
             <div class="adim-baslik">3. Sonuçları Karşılaştır</div>
-            <div class="adim-aciklama">Teorilerin radar grafikleri ve çatışma/işbirliği olasılıklarını görselleştir. Hangi teori senin dünya görüşüne yakın?</div>
+            <div class="adim-aciklama">Teorilerin radar grafikleri ve çatışma/işbirliği olasılıklarını görselleştir.</div>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
-    col_btn, _ = st.columns([1, 3])
-    with col_btn:
-        if st.button("🚀 Hemen Başla", use_container_width=True):
-            st.session_state["page"] = "📚 Teori Seçimi"
-            st.rerun()
-
-    st.markdown("""
-    <div class="kart" style="margin-top:32px;">
-        <div class="kart-baslik">Bu Uygulama Hakkında</div>
-        <p class="kart-metin">
-        Bu simülatör, Uluslararası İlişkiler lisans öğrencilerinin teorik çerçeveleri soyut kavramlar olarak değil, 
-        somut karar senaryoları aracılığıyla içselleştirmesini hedefler. Her teori farklı bir 
-        "gözlük" sunar: aynı krize bakarken farklı şeyler görürsünüz.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    if st.button("🚀 Hemen Başla"):
+        st.session_state["page"] = "📚 Teori Seçimi"
+        st.rerun()
 
 # ─────────────────────────────────────────────
 # TEORİ SEÇİMİ
@@ -640,34 +622,23 @@ def show_theory_selection():
     st.markdown('<p style="color:#4A5568; font-size:16px;">Simülasyona girmeden önce hangi teorik gözlükle analiz yapacağını seç.</p>', unsafe_allow_html=True)
 
     col_sol, col_sag = st.columns([1, 1.4])
-
     with col_sol:
-        secenekler = {t["isim"]: tid for tid, t in THEORIES.items()}
-        gosterim_listesi = [f"{THEORIES[tid]['ikon']}  {THEORIES[tid]['isim']}" for tid in THEORIES]
         id_listesi = list(THEORIES.keys())
-
+        gosterim_listesi = [f"{THEORIES[tid]['ikon']}  {THEORIES[tid]['isim']}" for tid in id_listesi]
         secim_index = 0
         if st.session_state.get("secilen_teori") in id_listesi:
             secim_index = id_listesi.index(st.session_state["secilen_teori"])
 
-        secim = st.selectbox(
-            "🔍 Teori seçin:",
-            options=range(len(id_listesi)),
-            format_func=lambda i: gosterim_listesi[i],
-            index=secim_index
-        )
+        secim = st.selectbox("🔍 Teori seçin:", options=range(len(id_listesi)), format_func=lambda i: gosterim_listesi[i], index=secim_index)
         secilen_id = id_listesi[secim]
         teori = THEORIES[secilen_id]
 
-        st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("🎮 Bu Teoriyle Simülasyona Başla", use_container_width=True):
+        if st.button("🎮 Bu Teoriyle Simülasyona Başla"):
             st.session_state["secilen_teori"] = secilen_id
-            # Simülasyon state'ini sıfırla
-            st.session_state["sim_asama"] = 0
-            st.session_state["sim_puan"] = 0
-            st.session_state["sim_rol"] = None
-            st.session_state["sim_secimler"] = []
-            st.session_state["sim_bitti"] = False
+            for k in ["sim_asama", "sim_puan", "sim_rol", "sim_secimler", "sim_bitti"]:
+                if k in st.session_state:
+                    del st.session_state[k]
+            init_state()
             st.session_state["page"] = "🎮 Simülasyon (Nehir Krizi)"
             st.rerun()
 
@@ -676,16 +647,12 @@ def show_theory_selection():
         <div class="teori-kart">
             <h2>{teori['ikon']} {teori['isim']}</h2>
             <hr style="border-color:rgba(255,255,255,0.2); margin:12px 0;">
-
             <div class="etiket">Temel Varsayım</div>
             <div class="deger">{teori['temel_varsayim']}</div>
-
             <div class="etiket">Ana Aktörler</div>
             <div class="deger">{teori['ana_aktorler']}</div>
-
             <div class="etiket">Güç Tanımı</div>
             <div class="deger">{teori['guc_tanimi']}</div>
-
             <div class="etiket">Dünya Görüşü</div>
             <div class="deger">{teori['dunya_gorusu']}</div>
         </div>
@@ -699,7 +666,6 @@ def show_theory_selection():
 # SİMÜLASYON
 # ─────────────────────────────────────────────
 def show_simulation():
-    # Teori seçilmemişse uyar
     if not st.session_state.get("secilen_teori"):
         st.warning("⚠️ Simülasyona başlamadan önce lütfen bir teori seçin.")
         if st.button("📚 Teori Seçimine Git"):
@@ -712,7 +678,6 @@ def show_simulation():
 
     st.markdown(f'<h1>🎮 Simülasyon — {teori["ikon"]} {teori["isim"]} Perspektifi</h1>', unsafe_allow_html=True)
 
-    # Senaryo kutusu
     st.markdown("""
     <div class="senaryo-kutu">
         <div class="senaryo-baslik">🌊 Nehir Krizi Senaryosu</div>
@@ -725,21 +690,16 @@ def show_simulation():
     </div>
     """, unsafe_allow_html=True)
 
-    # Rol seçimi
     if st.session_state["sim_asama"] == 0:
-        st.markdown("### 🎭 Rolünü Seç")
-        rol = st.radio(
-            "Hangi tarafı temsil edeceksin?",
-            ["🏔️ Arkania (Yukarı Kıyıdaş — Barajı İşleten)", "🌾 Beledya (Aşağı Kıyıdaş — Su Krizi Yaşayan)"],
-            key="rol_secim"
-        )
-        if st.button("✅ Rolü Onayla ve Oyuna Başla", use_container_width=False):
+        rol = st.radio("Hangi tarafı temsil edeceksin?",
+                       ["🏔️ Arkania (Yukarı Kıyıdaş — Barajı İşleten)", "🌾 Beledya (Aşağı Kıyıdaş — Su Krizi Yaşayan)"],
+                       key="rol_secim")
+        if st.button("✅ Rolü Onayla ve Oyuna Başla"):
             st.session_state["sim_rol"] = rol
             st.session_state["sim_asama"] = 1
             st.rerun()
         return
 
-    # Bitti mi kontrolü
     if st.session_state["sim_bitti"]:
         show_simulation_result()
         return
@@ -748,32 +708,22 @@ def show_simulation():
     if asama_no > 3:
         st.session_state["sim_bitti"] = True
         st.rerun()
-        return
 
-    # Aşama ilerleme göstergesi
-    col_p1, col_p2, col_p3, _ = st.columns([1, 1, 1, 5])
-    for i, col in enumerate([col_p1, col_p2, col_p3], 1):
-        with col:
-            if i < asama_no:
-                renk = "#22543D"
-                bg = "#C6F6D5"
-                ikon = "✓"
-            elif i == asama_no:
-                renk = "#FFFFFF"
-                bg = "#1A3C6E"
-                ikon = str(i)
+    cols = st.columns(3)
+    for i in range(3):
+        with cols[i]:
+            if i+1 < asama_no:
+                bg, renk, ikon = "#C6F6D5", "#22543D", "✓"
+            elif i+1 == asama_no:
+                bg, renk, ikon = "#1A3C6E", "#FFFFFF", str(i+1)
             else:
-                renk = "#A0AEC0"
-                bg = "#E2E8F0"
-                ikon = str(i)
+                bg, renk, ikon = "#E2E8F0", "#A0AEC0", str(i+1)
             st.markdown(f"""
             <div style="background:{bg}; color:{renk}; width:36px; height:36px; border-radius:50%;
                         display:flex; align-items:center; justify-content:center; font-weight:700;
                         font-size:14px; margin:0 auto;">{ikon}</div>
-            <div style="text-align:center; font-size:11px; color:#718096; margin-top:4px;">Aşama {i}</div>
+            <div style="text-align:center; font-size:11px; color:#718096; margin-top:4px;">Aşama {i+1}</div>
             """, unsafe_allow_html=True)
-
-    st.markdown("<br>", unsafe_allow_html=True)
 
     asama_veri = SIMULATION_DATA[asama_no]
     st.markdown(f"### {asama_veri['baslik']}")
@@ -783,87 +733,62 @@ def show_simulation():
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown(f"<p style='color:#2C5282; font-size:14px;'><strong>Rolün:</strong> {st.session_state['sim_rol']}</p>", unsafe_allow_html=True)
-
-    # Seçenekleri göster
     secenekler = asama_veri["secenekler"][teori_id]
     secim_metinleri = [s[0] for s in secenekler]
+    secim = st.radio("Eylemini seç:", secim_metinleri, key=f"secim_{asama_no}")
 
-    secim = st.radio(
-        "Eylemini seç:",
-        secim_metinleri,
-        key=f"secim_asama_{asama_no}"
-    )
-
-    secim_index = secim_metinleri.index(secim)
-
-    if st.button(f"➡️ Kararı Uygula", use_container_width=False):
-        secilen_tip = secenekler[secim_index][1]
-        secilen_geri = secenekler[secim_index][2]
-
-        if secilen_tip == "teorik":
+    if st.button("➡️ Kararı Uygula"):
+        secilen = secenekler[secim_metinleri.index(secim)]
+        if secilen[1] == "teorik":
             st.session_state["sim_puan"] += 1
-
         st.session_state["sim_secimler"].append({
             "asama": asama_no,
             "secim": secim,
-            "tip": secilen_tip,
-            "geri_bildirim": secilen_geri
+            "tip": secilen[1],
+            "geri_bildirim": secilen[2]
         })
-
         st.session_state["sim_asama"] += 1
-
         if st.session_state["sim_asama"] > 3:
             st.session_state["sim_bitti"] = True
-
         st.rerun()
 
-    # Önceki kararların geri bildirimleri
     if st.session_state["sim_secimler"]:
         st.markdown("<hr>", unsafe_allow_html=True)
         st.markdown("**📜 Önceki Kararların:**")
         for s in st.session_state["sim_secimler"]:
             st.info(s["geri_bildirim"])
 
-
 def show_simulation_result():
-    """Simülasyon sonuç ekranı"""
     puan = st.session_state["sim_puan"]
-    teori_id = st.session_state["secilen_teori"]
-    teori = THEORIES[teori_id]
+    teori = THEORIES[st.session_state["secilen_teori"]]
     sonuc = SONUCLAR[puan]
 
     st.markdown(f"""
     <div class="sonuc-hero">
-        <div style="font-size:60px; margin-bottom:12px;">{teori['ikon']}</div>
+        <div style="font-size:60px;">{teori['ikon']}</div>
         <h2>{sonuc['baslik']}</h2>
-        <p style="color:#B3C6E0; font-size:17px; max-width:600px; margin:0 auto;">{sonuc['durum']}</p>
+        <p style="color:#B3C6E0; font-size:17px;">{sonuc['durum']}</p>
     </div>
     """, unsafe_allow_html=True)
 
     col1, col2 = st.columns([1, 2])
-
     with col1:
         st.markdown(f"""
         <div class="puan-kutu">
-            <div style="font-size:13px; color:#718096; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Teori Uyum Puanı</div>
+            <div style="font-size:13px; color:#718096;">TEORİ UYUM PUANI</div>
             <div class="puan-sayi">{puan}/3</div>
-            <div style="font-size:14px; color:#4A5568; margin-top:8px;">{teori['isim']} perspektifi</div>
+            <div style="color:#4A5568;">{teori['isim']}</div>
         </div>
         """, unsafe_allow_html=True)
-
     with col2:
         st.markdown(f"""
         <div class="kart">
             <div class="kart-baslik">📝 Teorik Değerlendirme</div>
             <p class="kart-metin">{sonuc['metin']}</p>
-            <br>
-            <div class="etiket" style="color:#FF6B35; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">Teorik Beklenti</div>
-            <p class="kart-metin" style="margin-top:6px;">{teori['senaryo_davranis']}</p>
+            <p class="kart-metin" style="margin-top:12px;"><strong>Teorik Beklenti:</strong> {teori['senaryo_davranis']}</p>
         </div>
         """, unsafe_allow_html=True)
 
-    # Karar özeti
     st.markdown("### 📋 Kararlarının Özeti")
     for s in st.session_state["sim_secimler"]:
         tip_renk = {"teorik": "🟢", "zit": "🔴", "pragmatik": "🟡"}
@@ -871,28 +796,56 @@ def show_simulation_result():
         st.markdown(f"""
         <div class="kart-turuncu" style="border-left-color: {'#22543D' if s['tip']=='teorik' else '#742A2A' if s['tip']=='zit' else '#D69E2E'}">
             <strong>Aşama {s['asama']}</strong> — {tip_renk[s['tip']]} {tip_metin[s['tip']]}<br>
-            <span style="color:#4A5568; font-size:14px;">{s['secim']}</span>
+            <span style="color:#4A5568;">{s['secim']}</span>
         </div>
         """, unsafe_allow_html=True)
 
-    st.markdown("<br>", unsafe_allow_html=True)
-    col_r1, col_r2 = st.columns([1, 1])
+    # ---- 3D Karşılaştırma Grafiği ----
+    st.markdown("---")
+    st.markdown("### 🧊 Kararlarının 3 Boyutlu Profili")
+    teorik_sayisi = sum(1 for s in st.session_state["sim_secimler"] if s["tip"] == "teorik")
+    pragmatik_sayisi = sum(1 for s in st.session_state["sim_secimler"] if s["tip"] == "pragmatik")
+    aykiri_sayisi = 3 - teorik_sayisi - pragmatik_sayisi
+
+    fig_3d = go.Figure()
+    fig_3d.add_trace(go.Scatter3d(
+        x=[teorik_sayisi],
+        y=[pragmatik_sayisi],
+        z=[aykiri_sayisi],
+        mode='markers+text',
+        marker=dict(size=12, color='#FF6B35'),
+        text=["Senin Kararların"],
+        textposition='top center'
+    ))
+    fig_3d.update_layout(
+        scene=dict(
+            xaxis_title="Teorik",
+            yaxis_title="Pragmatik",
+            zaxis_title="Aykırı",
+            xaxis=dict(range=[0,3]),
+            yaxis=dict(range=[0,3]),
+            zaxis=dict(range=[0,3])
+        ),
+        height=400,
+        title="Kararlarının 3 Boyutlu Dağılımı"
+    )
+    st.plotly_chart(fig_3d, use_container_width=True)
+
+    col_r1, col_r2 = st.columns(2)
     with col_r1:
-        if st.button("🔄 Simülasyonu Sıfırla", use_container_width=True):
-            st.session_state["sim_asama"] = 0
-            st.session_state["sim_puan"] = 0
-            st.session_state["sim_rol"] = None
-            st.session_state["sim_secimler"] = []
-            st.session_state["sim_bitti"] = False
+        if st.button("🔄 Simülasyonu Sıfırla"):
+            for k in ["sim_asama", "sim_puan", "sim_rol", "sim_secimler", "sim_bitti"]:
+                if k in st.session_state:
+                    del st.session_state[k]
+            init_state()
             st.rerun()
     with col_r2:
-        if st.button("📚 Farklı Teori Dene", use_container_width=True):
+        if st.button("📚 Farklı Teori Dene"):
             st.session_state["secilen_teori"] = None
-            st.session_state["sim_asama"] = 0
-            st.session_state["sim_puan"] = 0
-            st.session_state["sim_rol"] = None
-            st.session_state["sim_secimler"] = []
-            st.session_state["sim_bitti"] = False
+            for k in ["sim_asama", "sim_puan", "sim_rol", "sim_secimler", "sim_bitti"]:
+                if k in st.session_state:
+                    del st.session_state[k]
+            init_state()
             st.session_state["page"] = "📚 Teori Seçimi"
             st.rerun()
 
@@ -901,9 +854,6 @@ def show_simulation_result():
 # ─────────────────────────────────────────────
 def show_comparison():
     st.markdown('<h1>📊 Teoriler Karşılaştırma Tablosu</h1>', unsafe_allow_html=True)
-    st.markdown('<p style="color:#4A5568; font-size:16px;">Dört ana teorinin temel özelliklerini ve nicel karşılaştırmasını keşfet.</p>', unsafe_allow_html=True)
-
-    # DataFrame tablosu
     tablo_data = {
         "Teori": ["Realizm 🗡️", "Liberalizm 🕊️", "Konstrüktivizm 🧩", "Marksizm ⚖️"],
         "Ana Aktör": ["Devlet", "Devlet + Kurumlar + STK", "Toplumlar + Bireyler", "Sınıflar + Şirketler"],
@@ -913,191 +863,78 @@ def show_comparison():
         "Analiz Düzeyi": ["Devlet / Sistem", "Devlet / Uluslararası", "Birey / Toplum", "Ekonomik yapı"]
     }
     df = pd.DataFrame(tablo_data)
+    st.dataframe(df, use_container_width=True, hide_index=True)
 
-    st.dataframe(
-        df,
-        use_container_width=True,
-        hide_index=True,
-        height=200
-    )
-
-    st.markdown("<br>", unsafe_allow_html=True)
     col1, col2 = st.columns(2)
-
     with col1:
-        st.markdown("#### 🕸️ Radar Grafiği — Teorik Odak Alanları")
+        st.markdown("#### 🕸️ Radar Grafiği")
         kategoriler = ["Askeri Odak", "Ekonomik Odak", "İşbirliği İmkanı", "Birey Etkisi"]
         renkler = ["#1A3C6E", "#2ECC71", "#FF6B35", "#E74C3C"]
-
         fig_radar = go.Figure()
         for tid, renk in zip(THEORIES.values(), renkler):
             degerler = [tid["radar"][k] for k in kategoriler]
-            degerler_kapali = degerler + [degerler[0]]
-            kategoriler_kapali = kategoriler + [kategoriler[0]]
-
             fig_radar.add_trace(go.Scatterpolar(
-                r=degerler_kapali,
-                theta=kategoriler_kapali,
+                r=degerler + [degerler[0]],
+                theta=kategoriler + [kategoriler[0]],
                 fill='toself',
                 name=f"{tid['ikon']} {tid['isim']}",
                 line=dict(color=renk, width=2),
                 fillcolor=renk,
                 opacity=0.2
             ))
-
-        fig_radar.update_layout(
-            polar=dict(
-                radialaxis=dict(visible=True, range=[0, 10], tickfont=dict(size=10)),
-                angularaxis=dict(tickfont=dict(size=12))
-            ),
-            showlegend=True,
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(family='Source Sans 3'),
-            height=420,
-            legend=dict(
-                orientation="h",
-                yanchor="bottom",
-                y=-0.2,
-                xanchor="center",
-                x=0.5
-            )
-        )
+        fig_radar.update_layout(polar=dict(radialaxis=dict(range=[0,10])), height=420)
         st.plotly_chart(fig_radar, use_container_width=True)
 
     with col2:
         st.markdown("#### 📊 Çatışma / İşbirliği Olasılığı")
         teori_isimleri = [f"{t['ikon']} {t['isim']}" for t in THEORIES.values()]
-        catisma_degerler = [t["olasilik"]["Çatışma"] for t in THEORIES.values()]
-        isbirligi_degerler = [t["olasilik"]["İşbirliği"] for t in THEORIES.values()]
-
+        catisma = [t["olasilik"]["Çatışma"] for t in THEORIES.values()]
+        isbirligi = [t["olasilik"]["İşbirliği"] for t in THEORIES.values()]
         fig_bar = go.Figure(data=[
-            go.Bar(
-                name='Çatışma Olasılığı (%)',
-                x=teori_isimleri,
-                y=catisma_degerler,
-                marker_color='#E74C3C',
-                marker_line_color='#C0392B',
-                marker_line_width=1
-            ),
-            go.Bar(
-                name='İşbirliği Olasılığı (%)',
-                x=teori_isimleri,
-                y=isbirligi_degerler,
-                marker_color='#2ECC71',
-                marker_line_color='#27AE60',
-                marker_line_width=1
-            )
+            go.Bar(name='Çatışma Olasılığı (%)', x=teori_isimleri, y=catisma, marker_color='#E74C3C'),
+            go.Bar(name='İşbirliği Olasılığı (%)', x=teori_isimleri, y=isbirligi, marker_color='#2ECC71')
         ])
-
-        fig_bar.update_layout(
-            barmode='group',
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(248,250,252,1)',
-            font=dict(family='Source Sans 3'),
-            height=420,
-            yaxis=dict(title="Olasılık (%)", range=[0, 100], gridcolor='#E2E8F0'),
-            xaxis=dict(tickfont=dict(size=11)),
-            legend=dict(
-                orientation="h",
-                yanchor="bottom",
-                y=1.02,
-                xanchor="right",
-                x=1
-            )
-        )
+        fig_bar.update_layout(barmode='group', height=420, yaxis=dict(range=[0,100]))
         st.plotly_chart(fig_bar, use_container_width=True)
 
-    # Teori detay expander
-    st.markdown("#### 🔍 Teori Detayları")
-    secili_detay = st.selectbox(
-        "Detayını görmek istediğin teoriyi seç:",
-        options=list(THEORIES.keys()),
-        format_func=lambda tid: f"{THEORIES[tid]['ikon']}  {THEORIES[tid]['isim']}"
-    )
+    secili_detay = st.selectbox("Detaylı teori incele:", list(THEORIES.keys()), format_func=lambda tid: f"{THEORIES[tid]['ikon']} {THEORIES[tid]['isim']}")
     teori_d = THEORIES[secili_detay]
-    with st.expander(f"📖 {teori_d['isim']} — Detaylı Açıklama", expanded=True):
+    with st.expander(f"{teori_d['isim']} Detayları", expanded=True):
         col_d1, col_d2 = st.columns(2)
         with col_d1:
             st.markdown(f"**Temel Varsayım:** {teori_d['temel_varsayim']}")
             st.markdown(f"**Ana Aktörler:** {teori_d['ana_aktorler']}")
-            st.markdown(f"**Güç Tanımı:** {teori_d['guc_tanimi']}")
         with col_d2:
-            st.markdown(f"**Dünya Görüşü:** {teori_d['dunya_gorusu']}")
+            st.markdown(f"**Güç Tanımı:** {teori_d['guc_tanimi']}")
             st.markdown(f"**Kriz Davranışı:** {teori_d['senaryo_davranis']}")
-        st.markdown(f"""
-        <div class="alinti">{teori_d['meshur_soz']}</div>
-        """, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────
 # HAKKINDA
 # ─────────────────────────────────────────────
 def show_about():
     st.markdown('<h1>ℹ️ Hakkında</h1>', unsafe_allow_html=True)
-
     col1, col2 = st.columns([2, 1])
     with col1:
         st.markdown("""
         <div class="kart">
             <div class="kart-baslik">🎓 Uygulama Hakkında</div>
-            <p class="kart-metin">
-            Bu uygulama, <strong>Uluslararası İlişkiler</strong> bölümü lisans ve yüksek lisans öğrencilerine 
-            yönelik eğitim amaçlı bir interaktif simülatördür. Amacı; Realizm, Liberalizm, Konstrüktivizm 
-            ve Marksizm gibi temel teorik paradigmaları, öğrencilerin aktif karar alma süreçleriyle deneyimlemesini sağlamaktır.
-            </p>
-            <br>
-            <div class="kart-baslik">👥 Hedef Kitle</div>
-            <p class="kart-metin">
-            Uluslararası İlişkiler, Siyaset Bilimi, Kamu Yönetimi ve Sosyal Bilimler bölümleri öğrencileri; 
-            ayrıca teorik çerçeveleri pratik senaryolarda test etmek isteyen araştırmacılar.
-            </p>
-            <br>
-            <div class="kart-baslik">⚠️ Sorumluluk Reddi</div>
-            <p class="kart-metin">
-            Senaryolar, karakter isimleri (Arkania, Beledya) ve olaylar tamamen kurgusaldır. 
-            Herhangi bir ülkeye, etnik gruba veya siyasi tutuma referans vermez. 
-            Teorik yorumlar akademik literatürü basitleştirmiş olabilir.
-            </p>
+            <p class="kart-metin">Bu simülatör, Uluslararası İlişkiler lisans öğrencilerine yönelik eğitim amaçlıdır. 
+            Realizm, Liberalizm, Konstrüktivizm ve Marksizm teorilerini bir kriz senaryosuyla deneyimlemenizi sağlar.</p>
         </div>
         """, unsafe_allow_html=True)
-
     with col2:
         st.markdown("""
         <div class="kart-turuncu">
-            <div class="kart-baslik">🛠️ Teknik Bilgi</div>
-            <p class="kart-metin">
-            <strong>Dil:</strong> Python 3<br><br>
-            <strong>Kütüphaneler:</strong><br>
-            • Streamlit<br>
-            • Pandas<br>
-            • Plotly<br><br>
-            <strong>Mimari:</strong> Tek dosya (app.py)<br><br>
-            <strong>Deployment:</strong> Streamlit Cloud uyumlu
-            </p>
-        </div>
-
-        <div class="kart" style="margin-top:16px;">
-            <div class="kart-baslik">📚 Kaynaklar</div>
-            <p class="kart-metin">
-            • Waltz, K. (1979). <em>Theory of International Politics</em><br>
-            • Keohane, R. (1984). <em>After Hegemony</em><br>
-            • Wendt, A. (1999). <em>Social Theory of IR</em><br>
-            • Frank, A.G. (1967). <em>Capitalism and Underdevelopment</em>
-            </p>
+            <div class="kart-baslik">🛠️ Teknik</div>
+            <p class="kart-metin">Python + Streamlit + Plotly</p>
         </div>
         """, unsafe_allow_html=True)
-
-    st.markdown("""
-    <div style="text-align:center; padding:32px 0 16px 0; color:#A0AEC0; font-size:14px;">
-        © 2024 Uİ Teori Simülatörü &nbsp;|&nbsp; Eğitim Amaçlıdır &nbsp;|&nbsp; Açık Kaynak
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("<div style='text-align:center; color:#A0AEC0;'>© 2024 Uİ Teori Simülatörü | Eğitim Amaçlıdır</div>", unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────
-# ANA ÇALIŞMA BLOĞU — Sayfa yönlendirme
+# SAYFA YÖNLENDİRME
 # ─────────────────────────────────────────────
 page = st.session_state["page"]
-
 if page == "🏠 Ana Sayfa":
     show_home()
 elif page == "📚 Teori Seçimi":
